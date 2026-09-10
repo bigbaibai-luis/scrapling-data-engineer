@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Installed agent/skill targets (if you run install.sh inside this repo)
+.claude/
+.cursor/
+.qwen/
+.codex/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check agent file exists
+        run: test -f agents/scrapling-data-engineer.md
+
+      - name: Check agent frontmatter
+        run: |
+          grep -q "name: Scrapling Data Engineer" agents/scrapling-data-engineer.md
+          grep -q "description:" agents/scrapling-data-engineer.md
+
+      - name: Check skill file exists
+        run: test -f skills/scrapling-data-engineer/SKILL.md
+
+      - name: Syntax-check shell installer
+        run: bash -n scripts/install.sh
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Syntax-check Python examples
+        run: |
+          python -m py_compile examples/basic_fetch.py examples/stealth_cloudflare.py examples/shopify_spider.py
